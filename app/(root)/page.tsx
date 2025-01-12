@@ -1,10 +1,11 @@
 import SearchForm from "@/components/SearchForm";
 import StartupCard from "@/components/StartupCard";
-export default async function Home({
-  searchParams,
-}: {
+
+type SearchParams_TP = {
   searchParams: Promise<{ query?: string }>;
-}) {
+};
+
+export default async function Home({ searchParams }: SearchParams_TP) {
   const { query } = await searchParams;
 
   const posts = [
