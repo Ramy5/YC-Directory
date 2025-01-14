@@ -1,5 +1,7 @@
 import SearchForm from "@/components/SearchForm";
-import StartupCard from "@/components/StartupCard";
+import StartupCard, { StartupCard_TP } from "@/components/StartupCard";
+import { client } from "@/sanity/lib/client";
+import { STARTUPS_QUERY } from "@/sanity/lib/queries";
 
 type SearchParams_TP = {
   searchParams: Promise<{ query?: string }>;
@@ -8,22 +10,25 @@ type SearchParams_TP = {
 export default async function Home({ searchParams }: SearchParams_TP) {
   const { query } = await searchParams;
 
-  const posts = [
-    {
-      _id: 1,
-      _createdAt: new Date(),
-      title: "Startup 1",
-      description: "Description 1",
-      category: "Category 1",
-      views: 100,
-      author: {
-        _id: 1,
-        name: "John Doe",
-        avatar: "https://placehold.co/48x48",
-      },
-      image: "https://placehold.co/400x400",
-    },
-  ];
+  const posts = await client.fetch(STARTUPS_QUERY);
+  console.log(posts);
+
+  // const posts = [
+  //   {
+  //     _id: 1,
+  //     _createdAt: new Date(),
+  //     title: "Startup 1",
+  //     description: "Description 1",
+  //     category: "Category 1",
+  //     views: 100,
+  //     author: {
+  //       _id: 1,
+  //       name: "John Doe",
+  //       avatar: "https://placehold.co/48x48",
+  //     },
+  //     image: "https://placehold.co/400x400",
+  //   },
+  // ];
 
   return (
     <>
