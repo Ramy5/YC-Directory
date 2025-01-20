@@ -172,7 +172,7 @@ export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: STARTUPS_QUERY
-// Query: *[_type == "startup" && defined(slug.current)] | order(_createdAt desc) {    _id,    title,    slug,    _createdAt,     author -> {      _id, name,  image, bio    },    description,    views,    category,    image  }
+// Query: *[    _type == "startup" &&    defined(slug.current) &&    (      !defined($search) ||      title match $search ||      category match $search ||      author->name match $search    )  ] | order(_createdAt desc) {    _id,    title,    slug,    _createdAt,     author -> {      _id, name, image, bio    },    description,    views,    category,    image  }
 export type STARTUPS_QUERYResult = Array<{
   _id: string;
   title: string | null;
@@ -189,11 +189,31 @@ export type STARTUPS_QUERYResult = Array<{
   category: string | null;
   image: string | null;
 }>;
+// Variable: STARTUP_BY_ID_QUERY
+// Query: *[_type == "startup" && _id == $id][0] {    _id,    title,    slug,    _createdAt,     author -> {      _id, name, image, bio, username    },    description,    views,    category,    image  }
+export type STARTUP_BY_ID_QUERYResult = {
+  _id: string;
+  title: string | null;
+  slug: Slug | null;
+  _createdAt: string;
+  author: {
+    _id: string;
+    name: string | null;
+    image: string | null;
+    bio: string | null;
+    username: string | null;
+  } | null;
+  description: string | null;
+  views: number | null;
+  category: string | null;
+  image: string | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n    *[_type == \"startup\" && defined(slug.current)] | order(_createdAt desc) {\n    _id,\n    title,\n    slug,\n    _createdAt, \n    author -> {\n      _id, name,  image, bio\n    },\n    description,\n    views,\n    category,\n    image\n  }\n": STARTUPS_QUERYResult;
+    "\n  *[\n    _type == \"startup\" &&\n    defined(slug.current) &&\n    (\n      !defined($search) ||\n      title match $search ||\n      category match $search ||\n      author->name match $search\n    )\n  ] | order(_createdAt desc) {\n    _id,\n    title,\n    slug,\n    _createdAt, \n    author -> {\n      _id, name, image, bio\n    },\n    description,\n    views,\n    category,\n    image\n  }\n": STARTUPS_QUERYResult;
+    "\n  *[_type == \"startup\" && _id == $id][0] {\n    _id,\n    title,\n    slug,\n    _createdAt, \n    author -> {\n      _id, name, image, bio, username\n    },\n    description,\n    views,\n    category,\n    image\n  }\n": STARTUP_BY_ID_QUERYResult;
   }
 }

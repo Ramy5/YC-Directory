@@ -10,10 +10,12 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const formatDate = (date: Date) => {
+export const formatDate = (date: Date | string) => {
   return new Date(date).toLocaleDateString("en-us", {
     month: "long",
     day: "numeric",
     year: "numeric",
   });
 };
+
+export const getPluralSuffix = (number: number) => (number > 1 ? "s" : "");

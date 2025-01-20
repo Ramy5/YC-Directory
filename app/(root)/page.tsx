@@ -1,6 +1,5 @@
 import SearchForm from "@/components/SearchForm";
 import StartupCard, { StartupCard_TP } from "@/components/StartupCard";
-import { client } from "@/sanity/lib/client";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { STARTUPS_QUERY } from "@/sanity/lib/queries";
 
@@ -10,26 +9,10 @@ type SearchParams_TP = {
 
 export default async function Home({ searchParams }: SearchParams_TP) {
   const { query } = await searchParams;
+  const params = { search: query || null };
 
-  const { data: posts } = await sanityFetch({ query: STARTUPS_QUERY });
+  const { data: posts } = await sanityFetch({ query: STARTUPS_QUERY, params });
   console.log(posts);
-
-  // const posts = [
-  //   {
-  //     _id: 1,
-  //     _createdAt: new Date(),
-  //     title: "Startup 1",
-  //     description: "Description 1",
-  //     category: "Category 1",
-  //     views: 100,
-  //     author: {
-  //       _id: 1,
-  //       name: "John Doe",
-  //       avatar: "https://placehold.co/48x48",
-  //     },
-  //     image: "https://placehold.co/400x400",
-  //   },
-  // ];
 
   return (
     <>

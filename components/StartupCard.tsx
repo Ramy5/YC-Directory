@@ -19,6 +19,8 @@ const StartupCard = ({ post }: { post: StartupCard_TP }) => {
     _id,
     image,
   } = post;
+  console.log("🚀 ~ StartupCard ~ image:", image);
+  console.log("🚀 ~ StartupCard ~ author:", author);
 
   return (
     <li className="startup-card group">
