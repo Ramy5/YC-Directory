@@ -20,7 +20,6 @@ const StartupCard = ({ post }: { post: StartupCard_TP }) => {
     image,
   } = post;
   console.log("🚀 ~ StartupCard ~ image:", image);
-  console.log("🚀 ~ StartupCard ~ author:", author);
 
   return (
     <li className="startup-card group">
@@ -42,8 +41,8 @@ const StartupCard = ({ post }: { post: StartupCard_TP }) => {
         </div>
         <Link href={`/user/${author?._id}`}>
           <Image
-            src={author.image}
-            alt={author?.name}
+            src={author?.image || ""}
+            alt={author?.name || ""}
             width={48}
             height={48}
             className="rounded-full"
@@ -53,8 +52,8 @@ const StartupCard = ({ post }: { post: StartupCard_TP }) => {
       <Link href={`/startup/${_id}`}>
         <p className="startup-card_desc">{description}</p>
         <Image
-          src={image}
-          alt={title}
+          src={image || ""}
+          alt={title || ""}
           width={480}
           height={400}
           className="startup-card_img"
