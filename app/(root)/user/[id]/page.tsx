@@ -13,7 +13,6 @@ const page = async ({
   params: Readonly<Promise<{ id: string }>>;
 }) => {
   const { id } = await params;
-  console.log("🚀 ~ id:", id);
   const session = await auth();
 
   const user = await client.fetch(AUTHOR_BY_ID_QUERY, { id });
