@@ -19,3 +19,6 @@ export const formatDate = (date: Date | string) => {
 };
 
 export const getPluralSuffix = (number: number) => (number > 1 ? "s" : "");
+
+export const parseServerActionResponse = <T>(res: T): T =>
+  JSON.parse(JSON.stringify(res));
